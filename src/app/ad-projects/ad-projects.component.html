@@ -4,10 +4,10 @@
         <button (click)="addProject()">Add Project</button>
         <span id="response" [class.success]="success" [class.fail]="!success">{{responseMessage}}</span>
     </div>
-    <div class="container">
+    <!-- <div class="container">
         <input type="file" id="fileinpur" accept=".zip" (change)=fileSelected($event)>
-    </div>
+    </div> -->
     <div *ngFor="let project of projects">
-        {{project}}
+        {{project}} <input type="file" class="fileinput" accept=".zip" (change)="fileSelected($event, project)">
     </div>
 </div>

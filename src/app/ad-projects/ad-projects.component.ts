@@ -33,11 +33,12 @@ export class AdProjectsComponent implements OnInit {
     });
   }
 
-  fileSelected(event: Event) {
+  fileSelected(event: Event, projectName: string) {
     const formData = new FormData();
     const file: File = ((event.target as HTMLInputElement).files as FileList).item(0) as File;
     if(!file) return;
     formData.append('file', file);
+    formData.append('project', projectName);
 
     this.api.postFileAsForm('filewrite/uploadzip', formData).subscribe((res) => {
       console.log(res);
