@@ -1,0 +1,13 @@
+<div class="container">
+    <div id="newproject">
+        <input type="text" name="newName" [(ngModel)]="newProjectName">
+        <button (click)="addProject()">Add Project</button>
+        <span id="response" [class.success]="success" [class.fail]="!success">{{responseMessage}}</span>
+    </div>
+    <div class="container">
+        <input type="file" id="fileinpur" accept=".zip" (change)=fileSelected($event)>
+    </div>
+    <div *ngFor="let project of projects">
+        {{project}}
+    </div>
+</div>
