@@ -6,13 +6,15 @@ import { ApiServiceService, CommonResponse } from '../api-service.service';
   templateUrl: './ad-projects.component.html',
   styleUrls: ['./ad-projects.component.css']
 })
+
 export class AdProjectsComponent implements OnInit {
   projects: string[];
   newProjectName: string;
   responseMessage: string;
   success: boolean;
+  
 
-  constructor(private api: ApiServiceService) { }
+  constructor(private api: ApiServiceService) {   }
 
   ngOnInit(): void {
     this.getProjects();
@@ -40,9 +42,12 @@ export class AdProjectsComponent implements OnInit {
     formData.append('file', file);
     formData.append('project', projectName);
 
-    this.api.postFileAsForm('filewrite/uploadzip', formData).subscribe((res) => {
+    this.api.postData('filewrite/checkProject', {name: projectName}).subscribe((res) => {
       console.log(res);
     })
+    /* this.api.postFileAsForm('filewrite/uploadzip/whatever', formData).subscribe((res) => {
+      console.log(res);
+    })*/
   }
 
 }
