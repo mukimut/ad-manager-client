@@ -6,7 +6,6 @@ import { ApiServiceService, CommonResponse } from '../api-service.service';
   templateUrl: './ad-projects.component.html',
   styleUrls: ['./ad-projects.component.css']
 })
-
 export class AdProjectsComponent implements OnInit {
   projects: string[];
   newProjectName: string;
@@ -40,14 +39,19 @@ export class AdProjectsComponent implements OnInit {
     const file: File = ((event.target as HTMLInputElement).files as FileList).item(0) as File;
     if(!file) return;
     formData.append('file', file);
-    formData.append('project', projectName);
 
-    this.api.postData('filewrite/checkProject', {name: projectName}).subscribe((res) => {
-      console.log(res);
-    })
-    /* this.api.postFileAsForm('filewrite/uploadzip/whatever', formData).subscribe((res) => {
-      console.log(res);
-    })*/
+    this.api.postData('filewrite/checkProject', {name: projectName}).subscribe((status: CheckProject) => {
+      if(status.hasFiles) {
+        console.log('Ad had existing file. Implement a check');
+      }
+
+      const link = 'filewrite/uploadzip/' + status.token;
+      this.api.postFileAsForm(link, formData).subscribe((res) => {
+        console.log(res);
+      });
+    });
   }
 
 }
+
+interface CheckProject {project: string, token: string, hasFiles: boolean}
